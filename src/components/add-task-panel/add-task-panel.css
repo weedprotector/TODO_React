@@ -1,0 +1,10 @@
+.add-task {
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 5px;
+    background-color: black;
+}
+
+.add-task-input {
+    margin-right: 20px;
+}
