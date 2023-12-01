@@ -4,8 +4,10 @@ import AppInfo from '../app-info/app-info';
 import AddTaskPanel from '../add-task-panel/add-task-panel';
 import TasksList from '../tasks-list/tasks-list';
 import DoneTasksList from '../done-tasks-list/done-tasks-list';
+import Select from '../select/select';
 
 import './app.css'
+
 
 function App() {
     const [data, setData] = useState(() => {
@@ -14,33 +16,32 @@ function App() {
         return initialValue || []
     });
 
-    const [id, setId] = useState(() => {
-        const savedId = localStorage.getItem('id');
-        const initialId = JSON.parse(savedId);
-        return initialId || 1
-    })
+    const [pickedSort, setPickedSort] = useState('')
+    
 
     const countOfTasks = data.filter(item => !item.done).length;
     const countOfDoneTasks =  data.filter(item => item.done).length;
 
     useEffect(() => {
         localStorage.setItem('data', JSON.stringify(data))
-        localStorage.setItem('id', JSON.stringify(id))
-    }, [data, id])
+    }, [data])
 
-    const addTask = (task) => {
-        if (task) {
-            const newTask = {
-                task,
-                id: id
-            }
-            setId(id + 1)
-            setData([newTask, ...data]);
-        }
+    const addTask = (newTask) => {
+        setData([...data, newTask])
     }
 
-    const removeTask = (id) => {
-        setData(data.filter(item => item.id !== id))
+    const removeTask = (task) => {
+        setData([...data].filter(item => item.id !== task.id))
+    }
+
+    const addPriority = (task) => {
+        console.log(`Добавили для ${task} приоритет`)
+        setData(data.map(item => {
+            if (item.id === task.id) {
+                return {...item, priority: !item.priority}
+            }
+            return item
+        }));
     }
 
     const onDone = (id) => {
@@ -52,6 +53,10 @@ function App() {
         }))
     }
 
+    const changeSort = (sort) => {
+        setPickedSort(sort);
+    }
+
     return (
         <div className="app">
             <AppInfo 
@@ -59,13 +64,22 @@ function App() {
                 countOfDoneTasks={countOfDoneTasks}/>
             <AddTaskPanel 
                 addTask={addTask}/>
+            <Select
+                options={[{value: 'priority', name: 'По важности'},
+                        {value: 'date', name: 'По дате добавления'}]}
+                defaultValue='Сортировка по:'
+                value={pickedSort}
+                onChange={changeSort}/>
             <TasksList 
-                data={data} 
+                data={data}
                 onDone={onDone}
-                remove={removeTask}/>
+                remove={removeTask}
+                addPriority={addPriority}
+                pickedSort={pickedSort}/>
             <DoneTasksList 
                 data={data}
-                onDone={onDone}/>
+                onDone={onDone}
+                remove={removeTask}/>
         </div>
     );
 }

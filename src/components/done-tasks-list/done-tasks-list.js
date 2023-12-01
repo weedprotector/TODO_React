@@ -1,17 +1,18 @@
 import TasksListItem from "../tasks-list-item/tasks-list-item";
 
-const DoneTasksList = ({data, onDone}) => {
+const DoneTasksList = ({data, onDone, remove}) => {
     const elements = data.map(item => {
         if (item.done) {
             return (
                 <TasksListItem
                     key={item.id}
                     onDone={() => onDone(item.id)}
+                    remove={() => remove(item)}
                     {...item}/>
             )
         }
         return null
-    })
+    });
 
     return (
         <>

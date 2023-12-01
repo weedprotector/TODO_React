@@ -1,18 +1,22 @@
 import './tasks-list-item.css'
 
 
-const TasksListItem = ({task, done, onDone, remove, data}) => {
+const TasksListItem = ({task, done, onDone, remove, addPriority, priority}) => {
     let clazz = 'list-group-item-label';
     let icon = 'fa-solid fa-check';
     if (done) {
         clazz += ' done';
         icon = 'fa-solid fa-rotate-left';
     }
-
+    if (priority) {
+        clazz += ' priority'
+    }
 
     return (
             <li className="list-group-item d-flex justify-content-between tasks-list-item">
-                <span className={clazz}>{task}</span>
+                <span 
+                    className={clazz}
+                    onClick={addPriority}>{task}</span>
                 <div className="btns">
                     <button
                         type='button'

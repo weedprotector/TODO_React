@@ -6,3 +6,11 @@
 .btn-sm {
     margin-left: 10px;
 }
+
+.priority {
+    color: red;
+}
+
+.list-group-item-label {
+    cursor: pointer;
+}
