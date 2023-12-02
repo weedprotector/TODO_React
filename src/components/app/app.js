@@ -17,6 +17,7 @@ function App() {
     });
 
     const [pickedSort, setPickedSort] = useState('')
+
     
 
     const countOfTasks = data.filter(item => !item.done).length;

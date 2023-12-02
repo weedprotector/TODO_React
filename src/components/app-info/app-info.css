@@ -1,4 +1,6 @@
 .app-info {
+    display: flex;
+    justify-content: space-between;
     background-color: gray;
     border-radius: 5px;
     padding: 20px;
