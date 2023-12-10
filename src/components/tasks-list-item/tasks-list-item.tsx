@@ -1,7 +1,15 @@
 import './tasks-list-item.css'
 
+interface TTasksListItem {
+    task: string;
+    done: boolean;
+    onDone: () => void;
+    remove: () => void;
+    addPriority?: () => void;
+    priority: boolean;
+}
 
-const TasksListItem = ({task, done, onDone, remove, addPriority, priority}) => {
+const TasksListItem = ({task, done, onDone, remove, addPriority, priority}: TTasksListItem) => {
     let clazz = 'list-group-item-label';
     let icon = 'fa-solid fa-check';
     if (done) {

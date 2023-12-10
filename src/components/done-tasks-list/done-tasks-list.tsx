@@ -1,6 +1,12 @@
-import TasksListItem from "../tasks-list-item/tasks-list-item";
+import TasksListItem from "../tasks-list-item/tasks-list-item"
 
-const DoneTasksList = ({data, onDone, remove}) => {
+interface TDoneTasksList {
+    data: {task: string, id: number, priority: boolean, done: boolean}[];
+    onDone: (value: number) => void;
+    remove: (task: {task: string, id: number, priority: boolean, done: boolean}) => void;
+}
+
+const DoneTasksList = ({data, onDone, remove}: TDoneTasksList) => {
     const elements = data.map(item => {
         if (item.done) {
             return (

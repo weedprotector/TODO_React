@@ -1,16 +1,20 @@
 import './app-info.css';
 import { useEffect, useState } from 'react';
 
+interface TAppInfo {
+    countOfTasks: number;
+    countOfDoneTasks: number;
+}
 
-const AppInfo = ({countOfTasks, countOfDoneTasks}) => {
+const AppInfo = ({countOfTasks, countOfDoneTasks}: TAppInfo) => {
 
 
     const [date, setDate] = useState(new Date());
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const currentDate = new Date(); // Создайте новый объект Date
-            setDate(currentDate); // Установите новое значение в state
+            const currentDate = new Date(); 
+            setDate(currentDate); 
         }, 1000)
         return () => clearInterval(interval);
     }, []);

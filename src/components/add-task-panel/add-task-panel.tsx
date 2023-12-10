@@ -2,16 +2,20 @@ import { useState, useEffect } from 'react';
 
 import './add-task-panel.css'
 
-const AddTaskPanel = ({addTask}) => {
+interface TAddTaskPanel {
+    addTask: (task: { task: string; id: number; priority: boolean, done: boolean }) => void; 
+}
+
+const AddTaskPanel = ({addTask}: TAddTaskPanel) => {
     const [task, setTask] = useState(() => {
         const saved = localStorage.getItem('task');
-        const initialValue = JSON.parse(saved);
+        const initialValue = JSON.parse(saved as string);
         return initialValue || ''
     });
 
     const [id, setId] = useState(() => {
         const savedId = localStorage.getItem('id');
-        const initialId = JSON.parse(savedId);
+        const initialId = JSON.parse(savedId as string);
         return initialId || 1
     })
 
@@ -22,12 +26,12 @@ const AddTaskPanel = ({addTask}) => {
         localStorage.setItem('id', JSON.stringify(id));
     }, [task, id])
 
-    const onValueChange = (e) => {
+    const onValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         e.preventDefault();
         setTask(e.target.value);
     }
 
-    const addNewTask = (e) => {
+    const addNewTask = (e: React.ChangeEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(task) {
@@ -35,6 +39,7 @@ const AddTaskPanel = ({addTask}) => {
                 task,
                 id,
                 priority: false,
+                done: false,
             }
             setId(id + 1)
             addTask(newTask)

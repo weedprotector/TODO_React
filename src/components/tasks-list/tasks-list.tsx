@@ -2,10 +2,18 @@ import TasksListItem from "../tasks-list-item/tasks-list-item";
 
 import './tasks-list.css'
 
-const TasksList = ({data, onDone, remove, addPriority, pickedSort}) => {
+interface TTasksList {
+    data: {task: string, id: number, priority: boolean, done: boolean}[];
+    onDone: (value: number) => void;
+    remove: (task: {task: string, id: number, priority: boolean, done: boolean}) => void;
+    addPriority: (task: {task: string, id: number, priority: boolean, done: boolean}) => void;
+    pickedSort: string;
+}
+
+const TasksList = ({data, onDone, remove, addPriority, pickedSort}: TTasksList) => {
 
     if (pickedSort && pickedSort === 'priority') {
-        data = data.sort((a, b) => b.priority - a.priority)
+        data = data.sort((a, b) => +b.priority - +a.priority)
     }
 
     if (pickedSort && pickedSort === 'date') {
